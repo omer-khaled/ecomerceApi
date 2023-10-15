@@ -116,7 +116,7 @@ const makeOrder = async(request,response,next)=>{
         const {session_id} = request.query;
         const session = await stripe.checkout.sessions.retrieve(session_id);
         const {userId,orderId} = JSON.parse(session.client_reference_id);
-        const success_url='https://comerce-jxyexn2oe-omer-khaleds-projects.vercel.app/successPage';
+        const success_url='https://comerce-gibn5tydr-omer-khaleds-projects.vercel.app/successPage';
         if(session.status==='complete'){
             const cartData = await Orders.updateOne({userId:userId,_id:orderId},{
                 paid:true,
@@ -136,7 +136,7 @@ const cancelOrder = async(request,response,next)=>{
         const {session_id} = request.query;
         const session = await stripe.checkout.sessions.retrieve(session_id);
         const {userId,orderId} = JSON.parse(session.client_reference_id);
-        const cancel_url='https://comerce-jxyexn2oe-omer-khaleds-projects.vercel.app/failedPage';
+        const cancel_url='https://comerce-gibn5tydr-omer-khaleds-projects.vercel.app/failedPage';
         if(session.status==='complete'){
             const cartData = await Orders.updateOne({userId:userId,_id:orderId},{
                 paid:false,
