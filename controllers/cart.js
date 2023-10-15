@@ -115,7 +115,8 @@ const makeOrder = async(request,response,next)=>{
     try{   
         const {session_id} = request.query;
         const session = await stripe.checkout.sessions.retrieve(session_id);
-        const {userId,orderId,success_url} = JSON.parse(session.client_reference_id);
+        const {userId,orderId} = JSON.parse(session.client_reference_id);
+        const success_url='https://omer-khaled.github.io/ecomerce/successPage';
         if(session.status==='complete'){
             const cartData = await Orders.updateOne({userId:userId,_id:orderId},{
                 paid:true,
@@ -134,7 +135,8 @@ const cancelOrder = async(request,response,next)=>{
     try{   
         const {session_id} = request.query;
         const session = await stripe.checkout.sessions.retrieve(session_id);
-        const {userId,orderId,cancel_url} = JSON.parse(session.client_reference_id);
+        const {userId,orderId} = JSON.parse(session.client_reference_id);
+        const cancel_url='https://omer-khaled.github.io/ecomerce/failedPage';
         if(session.status==='complete'){
             const cartData = await Orders.updateOne({userId:userId,_id:orderId},{
                 paid:false,
@@ -184,8 +186,6 @@ const checkout = async(request,response,next)=>{
             line_items: lintTimes,
             client_reference_id:JSON.stringify({
                 userId:userId,
-                success_url: success_url,
-                cancel_url: cancel_url,
                 orderId:orderDetails._id,
             }),
             mode: 'payment',
@@ -235,9 +235,7 @@ const checkoutForExistsOrder = async(request,response,next)=>{
             payment_method_types: ['card'],
             line_items: lintTimes,
             client_reference_id:JSON.stringify({
-                userId:userId,
-                success_url: success_url,
-                cancel_url: cancel_url,
+                userId:userId.toString(),
                 orderId:id,
             }),
             mode: 'payment',
