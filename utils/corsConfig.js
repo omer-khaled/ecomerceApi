@@ -1,5 +1,5 @@
 const corsOption = {
-    origin:'https://omer-khaled.github.io/ecomerce',
+    origin:'https://omer-khaled.github.io',
     methods:'OPTIONS,GET,POST,PUT,PATCH,DELETE',
     allowedHeaders:'Content-Type,Authorization',
     credentials:true,
