@@ -189,8 +189,10 @@ const checkout = async(request,response,next)=>{
                 orderId:orderDetails._id,
             }),
             mode: 'payment',
-            success_url: 'http://localhost:3002/cart/makeOrder?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url: 'http://localhost:3002/cart/cancelOrder?session_id={CHECKOUT_SESSION_ID}',
+            // success_url: 'http://localhost:3002/cart/makeOrder?session_id={CHECKOUT_SESSION_ID}',
+            // cancel_url: 'http://localhost:3002/cart/cancelOrder?session_id={CHECKOUT_SESSION_ID}',
+            success_url: 'https://ecomerce-kmcp.onrender.com/cart/makeOrder?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url: 'https://ecomerce-kmcp.onrender.com/cart/cancelOrder?session_id={CHECKOUT_SESSION_ID}',
         });
         response.json({
             url:session.url
