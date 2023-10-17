@@ -183,7 +183,13 @@ const Adminrefresh = async(request,response,next)=>{
 
 const logout = async(request,response,next)=>{
     try{
-        response.clearCookie('jwt', {domain: "localhost", path:'/'});
+        response.cookie('jwt','',{
+            path:'/',
+            httpOnly: true,
+            sameSite:'none',
+            secure:true,
+            expires: new Date(0)
+        });
         response.status(200).json({
             message:'user logout successfuly',
             status:true,
@@ -210,7 +216,7 @@ const resetPassword = async(request,response,next)=>{
         user.resetPasswordExpire = Date.now() + 1 * 60 * 60 * 1000;
         await user.save();
         sendEmail(user.email,'Reset Password',`
-            <a href="http://localhost:5173/changePassword?token=${hasedToken}">reset password</a>
+            <a href="https://comerce-ecru.vercel.app/changePassword?token=${hasedToken}">reset password</a>
         `);
         response.status(200).json({
             message:'check your Email',

@@ -116,7 +116,7 @@ const makeOrder = async(request,response,next)=>{
         const {session_id} = request.query;
         const session = await stripe.checkout.sessions.retrieve(session_id);
         const {userId,orderId} = JSON.parse(session.client_reference_id);
-        const success_url='https://comerce-gibn5tydr-omer-khaleds-projects.vercel.app/successPage';
+        const success_url='https://comerce-ecru.vercel.app/successPage';
         if(session.status==='complete'){
             const cartData = await Orders.updateOne({userId:userId,_id:orderId},{
                 paid:true,
@@ -136,7 +136,7 @@ const cancelOrder = async(request,response,next)=>{
         const {session_id} = request.query;
         const session = await stripe.checkout.sessions.retrieve(session_id);
         const {userId,orderId} = JSON.parse(session.client_reference_id);
-        const cancel_url='https://comerce-gibn5tydr-omer-khaleds-projects.vercel.app/failedPage';
+        const cancel_url='https://comerce-ecru.vercel.app/failedPage';
         if(session.status==='complete'){
             const cartData = await Orders.updateOne({userId:userId,_id:orderId},{
                 paid:false,
@@ -189,8 +189,8 @@ const checkout = async(request,response,next)=>{
                 orderId:orderDetails._id,
             }),
             mode: 'payment',
-            success_url: 'https://ecomerce-kmcp.onrender.com/cart/makeOrder?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url: 'https://ecomerce-kmcp.onrender.com/cart/cancelOrder?session_id={CHECKOUT_SESSION_ID}',
+            success_url: 'http://localhost:3002/cart/makeOrder?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url: 'http://localhost:3002/cart/cancelOrder?session_id={CHECKOUT_SESSION_ID}',
         });
         response.json({
             url:session.url
@@ -239,8 +239,8 @@ const checkoutForExistsOrder = async(request,response,next)=>{
                 orderId:id,
             }),
             mode: 'payment',
-            success_url: 'https://ecomerce-kmcp.onrender.com/cart/makeOrder?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url: 'https://ecomerce-kmcp.onrender.com/cart/cancelOrder?session_id={CHECKOUT_SESSION_ID}',
+            success_url: 'http://localhost:3002/cart/makeOrder?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url: 'http://localhost:3002/cart/cancelOrder?session_id={CHECKOUT_SESSION_ID}',
         });
         response.json({
             url:session.url
