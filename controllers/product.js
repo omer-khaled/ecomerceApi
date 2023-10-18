@@ -202,7 +202,14 @@ const filterOnProducts = async(request,response,next)=>{
         }
         const docsCount = await Products.countDocuments(options);
         const numberOfPage = Math.ceil(docsCount / docsPerPage);
-        const products =await Products.find(options).populate('company category','-_id -__v ').skip((page-1) * docsPerPage).limit(docsPerPage);
+        const products =await Products.find(options,{
+            sizes:-1,
+            colors:-1,
+            feedbacks:-1,
+            createdAt:-1,
+            updatedAt:-1,
+            inStock:-1,
+        }).populate('company category','-_id -__v -image').skip((page-1) * docsPerPage).limit(docsPerPage);
         response.status(200).json({
             message:"data retrieved successfully",
             status:true,
