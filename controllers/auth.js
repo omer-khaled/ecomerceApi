@@ -260,7 +260,9 @@ const changePassword = async(request,response,next)=>{
 const getUser = async(request,response,next)=>{
     try{
         const {id} = request.params;
-        const user =await Users.findById(id);
+        const user =await Users.findById(id,{
+            image:1,
+        });
         if(!user){
             const error = new Error('this use not exists')
             error.statusCode = 422;
