@@ -5,9 +5,7 @@ import path from 'path';
 
 const getCategories = async(request,response,next)=>{
     try{
-        const categories =await Categories.find({},{
-            image:0
-        });
+        const categories =await Categories.find({});
         response.status(200).json({
             message:'categories retrived successfully',
             status:true,

@@ -4,9 +4,7 @@ import clearImage from "../utils/clearImage.js";
 import path from 'path';
 const getCompanys = async(request,response,next)=>{
     try{
-        const companies =await Companies.find({},{
-            image:0
-        });
+        const companies =await Companies.find({});
         response.status(200).json({
             message:'categories retrived successfully',
             status:true,
